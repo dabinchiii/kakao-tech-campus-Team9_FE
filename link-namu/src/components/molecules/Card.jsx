@@ -23,14 +23,14 @@ const Card = ({
   tags = [],
   handleRefetch,
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
+  const [isHover, setIsHover] = useState(false);
   const [isContextMenuVisible, setContextMenuVisible] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({
     top: 0,
     left: 0,
   });
 
-  const handleContextMenu = event => {
+  const handleContextMenu = (event) => {
     event.preventDefault();
     setContextMenuPosition({ top: event.clientY, left: event.clientX });
     setContextMenuVisible(true);
@@ -40,7 +40,7 @@ const Card = ({
     setContextMenuVisible(false);
   };
 
-  const handleContextMenuAction = action => {
+  const handleContextMenuAction = (action) => {
     console.log("Selected action:", action);
     closeContextMenu();
   };
@@ -77,11 +77,16 @@ const Card = ({
         />
       )}
       <Draggable key={bookmarkId} draggableId={dragId} index={1}>
-        {provided => (
+        {(provided) => (
           <div
-            className={`transform bg-white border-2 rounded-md shadow-md w-72 h-80 hover:transition-transform hover:scale-105 hover:border hover:border-gray-300 hover:shadow-lg`}
-            onMouseEnter={() => setIsDragging(true)}
-            onMouseLeave={() => setIsDragging(false)}
+            title={url}
+            className={`transform bg-white border-2 rounded-md shadow-md w-72 h-80 
+              ${
+                isHover &&
+                `transition-transform scale-105 border border-gray-300 shadow-lg z-30 flex flex-col h-auto min-h-[20rem]`
+              }`}
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
@@ -92,25 +97,40 @@ const Card = ({
             <img
               src={imageUrl}
               alt={imageAlt}
-              className="object-contain w-64 h-40 mx-auto my-1 rounded-sm"
+              className="object-contain w-64 mx-auto my-2 h-36"
             />
 
             {/* 내용 영역 */}
-            <div className="px-4 py-4">
-              <div className="mb-2 overflow-hidden text-xl font-bold break-all text-ellipsis whitespace-nowrap">
+            <div className="px-4 py-2">
+              <p
+                className={`mb-2 overflow-hidden font-bold break-all text-md text-ellipsis whitespace-nowrap ${
+                  isHover && `overflow-normal text-clip whitespace-break-spaces`
+                }`}
+              >
                 {title}
-              </div>
-              <p className="overflow-hidden text-sm text-gray-700 break-all text-ellipsis whitespace-normal">
-                <div className="line-clamp-2">{description}</div>
+              </p>
+              <hr />
+              <p
+                title={description}
+                className={`mt-2 overflow-hidden text-sm text-gray-700 break-all whitespace-normal text-ellipsis line-clamp-2 
+              ${isHover && `overflow-normal line-clamp-none text-clip`}`}
+              >
+                {description}
               </p>
             </div>
 
             {/* 꼬리 영역 */}
-            <div className="px-2 py-2 overflow-hidden w-[90%]">
+            <div
+              className={`px-2 py-2 overflow-hidden w-[90%]
+            ${isHover && `overflow-normal`}`}
+            >
               {/* 태그 영역 */}
-              <span className="flex w-full">
+              <span
+                className={`flex w-full
+            ${isHover && `flex-wrap`}`}
+              >
                 {tags.map((tag, index) => (
-                  <Tag key={index} name={tag.tagName} />
+                  <Tag key={index} name={tag.tagName} isHover={isHover} />
                 ))}
               </span>
               {/* 버튼 영역 */}
