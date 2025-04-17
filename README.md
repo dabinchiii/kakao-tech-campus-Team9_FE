@@ -257,7 +257,7 @@ Notion 연동
 
 <br>
 
-
+<!--
 ## 관련 링크 (2025.04.17 현재 권한 필요)
 
 - [링크나무 팀 노션](https://www.notion.so/taeho1234/9-c9956e710af447b4b0aa1197fc4cf76f)
@@ -268,7 +268,7 @@ Notion 연동
 - [링크나무 기획안](https://www.notion.so/taeho1234/5edcf26e1f844c4c88fc1b471abbebb5)
 - [링크나무 테스트 결과보고서](https://www.notion.so/a41e2905a8644c249f95d58c9344e933)
 - [링크나무 테스트 시나리오 명세서](https://www.notion.so/04a226ff46b6469186e05694ed916726)
-
+-->
 ---
 
 <br>
